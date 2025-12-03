@@ -15,17 +15,6 @@ class _MainPageState extends State<MainPage> {
   MainAxisAlignment mainAlign = MainAxisAlignment.spaceBetween;
   CrossAxisAlignment crsAlign = CrossAxisAlignment.center;
 
-  List<Widget> getList() {
-    return List.generate(
-      20,
-      (index) => Container(
-        width: 100,
-        height: 100,
-        color: Colors.primaries[index.toInt() % Colors.primaries.length],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,17 +23,46 @@ class _MainPageState extends State<MainPage> {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 206, 241, 214),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            direction: Axis.horizontal,
-            alignment: WrapAlignment.spaceBetween,
-            children: getList(),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                  color: Colors.amberAccent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.cyanAccent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ],
           ),
         ),
       ),
