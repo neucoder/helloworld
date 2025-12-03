@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
+  runApp(MainPage());
+}
+
+// 自定义无状态组件
+
+class MainPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       title: 'Flutter组件初体验',
-      theme: ThemeData(scaffoldBackgroundColor: Colors.blue),
+      theme: ThemeData(scaffoldBackgroundColor: Colors.purpleAccent),
       home: Scaffold(
         appBar: AppBar(title: Text('头部区域')),
         body: Container(child: Center(child: Text("这是body区域"))),
@@ -14,6 +21,6 @@ void main() {
           child: Center(child: Text("这是bottomNavigationBar区域")),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
