@@ -20,7 +20,23 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('Text示例'))),
-        body: Center(child: Text("hello, 回退!")),
+        body: Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          height: double.infinity,
+          child: Image.network(
+            "https://picx.zhimg.com/v2-d6f44389971daab7e688e5b37046e4e4_720w.jpg?source=172ae18b",
+            width: 400,
+            height: 400,
+            fit: BoxFit.contain,
+          ),
+          // child: Image.asset(
+          //   "lib/images/test.png",
+          //   width: 100,
+          //   height: 100,
+          //   fit: BoxFit.contain,
+          // ),
+        ),
       ),
     );
   }
