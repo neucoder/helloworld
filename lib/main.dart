@@ -4,55 +4,42 @@ void main() {
   runApp(MainPage());
 }
 
-class MainPage extends StatefulWidget {
-  MainPage({Key? key}) : super(key: key);
+// 自定义无状态组件
 
-  @override
-  _MainPageState createState() {
-    print("有状态组件createState方法调用");
-    return _MainPageState();
-  }
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    print("有状态组件initState方法调用");
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    print("有状态组件didChangeDependencies方法调用");
-  }
-
-  @override
-  void didUpdateWidget(covariant MainPage oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-    print("有状态组件didUpdateWidget方法调用");
-  }
-
-  @override
-  void deactivate() {
-    // TODO: implement deactivate
-    super.deactivate();
-    print("有状态组件deactivate方法调用");
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    print("有状态组件dispose方法调用");
-  }
-
+class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print("有状态组件build方法调用");
-    return Container(child: null);
+    return MaterialApp(
+      title: 'Flutter组件初体验',
+      theme: ThemeData(scaffoldBackgroundColor: Colors.blue),
+      home: Scaffold(
+        appBar: AppBar(title: Text('头部区域')),
+        body: Container(
+          child: Center(
+            child: TextButton(
+              onPressed: () {
+                print("点击了body区域按钮");
+              },
+              child: Text("这是body区域按钮"),
+            ),
+            // child: GestureDetector(
+            //   child: Text("这是body区域", key: Key("body")),
+            //   onTap: () {
+            //     // print("点击了body区域");
+            //     // 点击body区域后，改变body区域的文本
+            //   },
+            //   onDoubleTap: () {
+            //     print("双击了body区域");
+            //   },
+            // ),
+          ),
+        ),
+        bottomNavigationBar: Container(
+          color: const Color.fromARGB(255, 245, 247, 160),
+          height: 80,
+          child: Center(child: Text("这是bottomNavigationBar区域")),
+        ),
+      ),
+    );
   }
 }
