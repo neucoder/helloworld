@@ -4,47 +4,37 @@ void main() {
   runApp(MainPage());
 }
 
-class MainPage extends StatefulWidget {
-  MainPage({Key? key}) : super(key: key);
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
 
-  @override
-  _MainPageState createState() => _MainPageState();
-}
+  // 角度转换为弧度
+  double angleToRadians(double angle) {
+    return angle / 180 * 3.14;
+  }
 
-class _MainPageState extends State<MainPage> {
-  int count = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  count--;
-                  print(count);
-                  setState(() {});
-                },
-                child: Text("减"),
-              ),
-              Text(count.toString(), style: TextStyle(fontSize: 20)),
-              TextButton(
-                onPressed: () {
-                  count++;
-                  print(count);
-                  setState(() {});
-                },
-                child: Text("加"),
-              ),
-            ],
+        appBar: AppBar(title: Text('app bar')),
+        body: Container(
+          transform: Matrix4.rotationZ(angleToRadians(5)),
+          alignment: Alignment.center,
+          width: 200,
+          height: 200,
+          margin: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.yellowAccent, width: 5),
           ),
-        ),
-        bottomNavigationBar: Container(
-          color: const Color.fromARGB(255, 245, 247, 160),
-          height: 80,
-          child: Center(child: Text("这是bottomNavigationBar区域")),
+          child: Text(
+            'Hello World',
+            style: TextStyle(
+              color: const Color.fromRGBO(240, 9, 9, 1),
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
     );
