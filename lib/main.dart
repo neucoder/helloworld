@@ -11,17 +11,20 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Center(child: Text('Center示例'))),
+        appBar: AppBar(title: Center(child: Text('Align示例'))),
         body: Center(
           child: Container(
-            width: 200,
-            height: 200,
-            color: Colors.blue,
-            child: Center(
-              child: Text(
-                '居中内容',
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
+            alignment: Alignment.center,
+            width: 400,
+            height: 600,
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Align(
+              widthFactor: 2,
+              heightFactor: 2,
+              child: Icon(Icons.star, size: 100, color: Colors.amberAccent),
             ),
           ),
         ),
