@@ -15,6 +15,17 @@ class _MainPageState extends State<MainPage> {
   MainAxisAlignment mainAlign = MainAxisAlignment.spaceBetween;
   CrossAxisAlignment crsAlign = CrossAxisAlignment.center;
 
+  List<Widget> getList() {
+    return List.generate(
+      20,
+      (index) => Container(
+        width: 100,
+        height: 100,
+        color: Colors.primaries[index.toInt() % Colors.primaries.length],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,59 +34,17 @@ class _MainPageState extends State<MainPage> {
         body: Container(
           width: double.infinity,
           height: double.infinity,
+
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 206, 241, 214),
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Flex(
-            direction: Axis.vertical,
-            // direction: Axis.horizontal,
-            // mainAxisAlignment: mainAlign,
-            // crossAxisAlignment: crsAlign,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                  ),
-                  width: double.infinity,
-                  height: 50,
-                ),
-              ),
-              Expanded(
-                flex: 8,
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  color: Colors.green,
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '底部',
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          child: Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            direction: Axis.horizontal,
+            alignment: WrapAlignment.spaceBetween,
+            children: getList(),
           ),
         ),
       ),
