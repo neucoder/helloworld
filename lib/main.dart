@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('Text示例'))),
-        body: Center(child: Text("hello, world!")),
+        body: Center(child: Text("hello, 回退!")),
       ),
     );
   }
