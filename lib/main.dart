@@ -4,23 +4,19 @@ void main() {
   runApp(MainPage());
 }
 
-// 自定义无状态组件
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
 
-class MainPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _MainPageState();
-  }
-}
-
-class _MainPageState extends State<MainPage> {
+  // 无状态组件只有在创建的时候会调用一次build方法
+  // 参数改变的时候也会调用build方法
   @override
   Widget build(BuildContext context) {
+    print("无状态组件build方法调用");
     return MaterialApp(
-      title: 'Flutter组件初体验-有状态组件',
+      title: 'Flutter组件初体验',
       theme: ThemeData(scaffoldBackgroundColor: Colors.blue),
       home: Scaffold(
-        appBar: AppBar(title: Text('头部区域-有状态组件')),
+        appBar: AppBar(title: Text('头部区域')),
         body: Container(child: Center(child: Text("这是body区域"))),
         bottomNavigationBar: Container(
           color: const Color.fromARGB(255, 245, 247, 160),
