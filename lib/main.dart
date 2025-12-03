@@ -12,21 +12,16 @@ class MainPage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('Align示例'))),
-        body: Center(
-          child: Container(
-            alignment: Alignment.center,
-            width: 400,
-            height: 600,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Align(
-              widthFactor: 2,
-              heightFactor: 2,
-              child: Icon(Icons.star, size: 100, color: Colors.amberAccent),
-            ),
+        body: Container(
+          padding:
+              // EdgeInsets.only(top: 60, left: 40, right: 20, bottom: 10),
+              // EdgeInsets.all(30),
+              EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          decoration: BoxDecoration(
+            color: Colors.yellowAccent,
+            borderRadius: BorderRadius.circular(20),
           ),
+          child: Container(color: Colors.blue),
         ),
       ),
     );
