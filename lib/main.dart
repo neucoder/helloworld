@@ -212,7 +212,7 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: Container(
                   padding: EdgeInsets.all(20),
-                  child: Column(
+                  child: Row(
                     mainAxisAlignment: mainAxisAlignment,
                     crossAxisAlignment: crsAlign,
                     textBaseline: crsAlign == CrossAxisAlignment.baseline
