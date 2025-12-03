@@ -12,232 +12,66 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.spaceBetween;
+  MainAxisAlignment mainAlign = MainAxisAlignment.spaceBetween;
   CrossAxisAlignment crsAlign = CrossAxisAlignment.center;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Center(child: Text('Align示例'))),
+        appBar: AppBar(title: Center(child: Text('flex示例'))),
         body: Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(20),
+            color: const Color.fromARGB(255, 206, 241, 214),
+            borderRadius: BorderRadius.circular(10),
           ),
-          child: Column(
+          child: Flex(
+            direction: Axis.vertical,
+            // direction: Axis.horizontal,
+            // mainAxisAlignment: mainAlign,
+            // crossAxisAlignment: crsAlign,
             children: [
-              // 主轴对齐按钮区域
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Text(
-                      '主轴对齐 (MainAxisAlignment)',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              mainAxisAlignment =
-                                  MainAxisAlignment.spaceBetween;
-                            });
-                          },
-                          child: Text('spaceBetween'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              mainAxisAlignment = MainAxisAlignment.spaceAround;
-                            });
-                          },
-                          child: Text('spaceAround'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              mainAxisAlignment = MainAxisAlignment.spaceEvenly;
-                            });
-                          },
-                          child: Text('spaceEvenly'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              mainAxisAlignment = MainAxisAlignment.start;
-                            });
-                          },
-                          child: Text('start'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              mainAxisAlignment = MainAxisAlignment.end;
-                            });
-                          },
-                          child: Text('end'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              mainAxisAlignment = MainAxisAlignment.center;
-                            });
-                          },
-                          child: Text('center'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              // 交叉轴对齐按钮区域
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Text(
-                      '交叉轴对齐 (CrossAxisAlignment)',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              crsAlign = CrossAxisAlignment.start;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                crsAlign == CrossAxisAlignment.start
-                                ? Colors.green
-                                : null,
-                          ),
-                          child: Text('cross start'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              crsAlign = CrossAxisAlignment.center;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                crsAlign == CrossAxisAlignment.center
-                                ? Colors.green
-                                : null,
-                          ),
-                          child: Text('cross center'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              crsAlign = CrossAxisAlignment.end;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: crsAlign == CrossAxisAlignment.end
-                                ? Colors.green
-                                : null,
-                          ),
-                          child: Text('cross end'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              crsAlign = CrossAxisAlignment.stretch;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                crsAlign == CrossAxisAlignment.stretch
-                                ? Colors.green
-                                : null,
-                          ),
-                          child: Text('cross stretch'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              crsAlign = CrossAxisAlignment.baseline;
-                            });
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                crsAlign == CrossAxisAlignment.baseline
-                                ? Colors.green
-                                : null,
-                          ),
-                          child: Text('cross baseline'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              // 分隔线
-              Divider(color: Colors.white, thickness: 2),
-
-              // 演示区域
               Expanded(
+                flex: 1,
                 child: Container(
-                  padding: EdgeInsets.all(20),
-                  child: Row(
-                    mainAxisAlignment: mainAxisAlignment,
-                    crossAxisAlignment: crsAlign,
-                    textBaseline: crsAlign == CrossAxisAlignment.baseline
-                        ? TextBaseline.alphabetic
-                        : null,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        color: Colors.yellow,
-                        width: 50,
-                        height: 50,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        color: Colors.yellow,
-                        width: 80,
-                        height: 30,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        color: Colors.yellow,
-                        width: 40,
-                        height: 60,
-                      ),
-                    ],
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                  ),
+                  width: double.infinity,
+                  height: 50,
+                ),
+              ),
+              Expanded(
+                flex: 8,
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  color: Colors.green,
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '底部',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
