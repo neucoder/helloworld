@@ -4,34 +4,41 @@ void main() {
   runApp(MainPage());
 }
 
-// 自定义无状态组件
+class MainPage extends StatefulWidget {
+  MainPage({Key? key}) : super(key: key);
 
-class MainPage extends StatelessWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter组件初体验',
-      theme: ThemeData(scaffoldBackgroundColor: Colors.blue),
       home: Scaffold(
-        appBar: AppBar(title: Text('头部区域')),
-        body: Container(
-          child: Center(
-            child: TextButton(
-              onPressed: () {
-                print("点击了body区域按钮");
-              },
-              child: Text("这是body区域按钮"),
-            ),
-            // child: GestureDetector(
-            //   child: Text("这是body区域", key: Key("body")),
-            //   onTap: () {
-            //     // print("点击了body区域");
-            //     // 点击body区域后，改变body区域的文本
-            //   },
-            //   onDoubleTap: () {
-            //     print("双击了body区域");
-            //   },
-            // ),
+        body: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  count--;
+                  print(count);
+                  setState(() {});
+                },
+                child: Text("减"),
+              ),
+              Text(count.toString(), style: TextStyle(fontSize: 20)),
+              TextButton(
+                onPressed: () {
+                  count++;
+                  print(count);
+                  setState(() {});
+                },
+                child: Text("加"),
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: Container(
