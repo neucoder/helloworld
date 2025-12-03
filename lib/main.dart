@@ -40,8 +40,10 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('ListView组件'))),
-        body: ListView(
-          children: List.generate(100, (index) {
+        body: ListView.builder(
+          itemCount: 100,
+          padding: EdgeInsets.all(10),
+          itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.only(top: 10),
               height: 80,
@@ -55,7 +57,7 @@ class _MainPageState extends State<MainPage> {
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             );
-          }),
+          },
         ),
       ),
     );
