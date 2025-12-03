@@ -40,12 +40,15 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('ListView组件'))),
-        body: ListView.builder(
+        body: ListView.separated(
           itemCount: 100,
-          padding: EdgeInsets.all(10),
+          // padding: EdgeInsets.all(10),
+          separatorBuilder: (context, index) {
+            return Container(height: 10, color: Colors.red);
+          },
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.only(top: 10),
+              // margin: EdgeInsets.only(top: 10),
               height: 80,
               alignment: Alignment.center,
               decoration: BoxDecoration(
