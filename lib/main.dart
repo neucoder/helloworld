@@ -28,38 +28,52 @@ class _MainPageState extends State<MainPage> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Stack(
-            alignment: Alignment.center,
             children: [
-              Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                  color: Colors.amberAccent,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
               Container(
                 width: 200,
                 height: 200,
                 decoration: BoxDecoration(
-                  color: Colors.cyanAccent,
+                  color: Colors.grey,
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(10),
+              Positioned(
+                left: 10,
+                top: 10,
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(10),
+              Positioned(
+                right: 10,
+                bottom: 10,
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+
+              Positioned(
+                right: 0,
+                bottom: 0,
+                top: 0,
+
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ],
