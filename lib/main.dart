@@ -24,7 +24,14 @@ class _MainPageState extends State<MainPage> {
           childAspectRatio: 2.0,
           children: List.generate(
             msgList.length,
-            (index) => Child(msg: msgList[index]),
+            (index) => Child(
+              msg: msgList[index],
+              index: index,
+              deleteFood: (int i) {
+                msgList.removeAt(i);
+                setState(() {});
+              },
+            ),
           ),
         ),
       ),
@@ -34,7 +41,14 @@ class _MainPageState extends State<MainPage> {
 
 class Child extends StatefulWidget {
   final String msg;
-  const Child({Key? key, required this.msg}) : super(key: key);
+  final int index;
+  final Function(int) deleteFood;
+  const Child({
+    Key? key,
+    required this.msg,
+    required this.index,
+    required this.deleteFood,
+  }) : super(key: key);
 
   @override
   _ChildState createState() => _ChildState();
@@ -51,11 +65,25 @@ class _ChildState extends State<Child> {
         border: Border.all(color: Colors.blue),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Center(
-        child: Text(
-          widget.msg,
-          style: TextStyle(fontSize: 20, color: Colors.blue[800]),
-        ),
+      child: Stack(
+        alignment: Alignment.topRight,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            color: Colors.blue[50],
+            child: Text(
+              widget.msg,
+              style: TextStyle(fontSize: 20, color: Colors.blue[800]),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            color: Colors.blue[800],
+            onPressed: () {
+              widget.deleteFood(widget.index);
+            },
+          ),
+        ],
       ),
     );
   }
