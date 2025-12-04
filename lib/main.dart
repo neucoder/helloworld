@@ -40,15 +40,14 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('ListView组件'))),
-        body: ListView.separated(
-          itemCount: 100,
-          // padding: EdgeInsets.all(10),
-          separatorBuilder: (context, index) {
-            return Container(height: 10, color: Colors.red);
-          },
-          itemBuilder: (context, index) {
+        body: GridView.count(
+          scrollDirection: Axis.vertical, // 滚动方向
+          crossAxisCount: 5, // 每行5个
+          padding: EdgeInsets.all(10),
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          children: List.generate(100, (index) {
             return Container(
-              // margin: EdgeInsets.only(top: 10),
               height: 80,
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -60,7 +59,7 @@ class _MainPageState extends State<MainPage> {
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             );
-          },
+          }),
         ),
       ),
     );
