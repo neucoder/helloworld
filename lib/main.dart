@@ -4,20 +4,27 @@ void main() {
   runApp(MainPage());
 }
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
+
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  List<String> msgList = ["鱼香肉丝", "宫保鸡丁", "红烧肉", "青椒肉丝", "溜肉片", "北京烤鸭"];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Hello World')),
-        body: Center(
-          child: Column(
-            children: [
-              Text('父组件', style: TextStyle(fontSize: 24.0, color: Colors.red)),
-              Child(msg: "好言相---劝"),
-            ],
+        appBar: AppBar(title: Text('父子组件通信')),
+        body: GridView.count(
+          crossAxisCount: 3,
+          childAspectRatio: 2.0,
+          children: List.generate(
+            msgList.length,
+            (index) => Child(msg: msgList[index]),
           ),
         ),
       ),
@@ -37,22 +44,19 @@ class _ChildState extends State<Child> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(
-        "子组件-${widget.msg}",
-        style: TextStyle(fontSize: 16.0, color: Colors.blue),
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.blue[50],
+        border: Border.all(color: Colors.blue),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Center(
+        child: Text(
+          widget.msg,
+          style: TextStyle(fontSize: 20, color: Colors.blue[800]),
+        ),
       ),
     );
   }
 }
-
-// class Child extends StatelessWidget {
-//   final String? msg;
-//   const Child({Key? key,  this.msg}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Text("子组件-$msg", style: TextStyle(fontSize: 22.0, color: Colors.blue)),
-//     );
-//   }
-// }
