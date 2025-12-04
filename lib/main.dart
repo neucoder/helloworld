@@ -48,11 +48,23 @@ class _MainPageState extends State<MainPage> {
                 height: 200,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.lightBlueAccent,
+                  // color: Colors.lightBlueAccent,
                 ),
-                child: Text(
-                  "轮播图",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                child: PageView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        "轮播图${index + 1}",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
