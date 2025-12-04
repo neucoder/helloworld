@@ -19,12 +19,16 @@ class _MainPageState extends State<MainPage> {
   late TextEditingController _passwordController;
   late ScrollController _scrollController;
 
+  int _currentIndex = 0;
+  late PageController _pageController;
+
   @override
   void initState() {
     super.initState();
     _usernameController = TextEditingController();
     _passwordController = TextEditingController();
     _scrollController = ScrollController();
+    _pageController = PageController(initialPage: _currentIndex);
   }
 
   @override
@@ -32,6 +36,7 @@ class _MainPageState extends State<MainPage> {
     _usernameController.dispose();
     _passwordController.dispose();
     _scrollController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -50,21 +55,65 @@ class _MainPageState extends State<MainPage> {
                   borderRadius: BorderRadius.circular(10),
                   // color: Colors.lightBlueAccent,
                 ),
-                child: PageView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10),
+                child: Stack(
+                  children: [
+                    PageView.builder(
+                      controller: _pageController, // 添加PageController
+                      itemCount: 10,
+                      onPageChanged: (index) {
+                        // 添加页面变化回调
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            "轮播图${index + 1}",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                        );
+                      },
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          10,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              _currentIndex = index;
+                              _pageController.animateToPage(
+                                index,
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                              setState(() {});
+                            },
+                            child: Container(
+                              width: 10,
+                              height: 10,
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              decoration: BoxDecoration(
+                                color: _currentIndex == index
+                                    ? Colors.red
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                      child: Text(
-                        "轮播图${index + 1}",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
               ),
             ),
