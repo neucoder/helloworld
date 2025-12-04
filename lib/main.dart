@@ -40,9 +40,10 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('ListView组件'))),
-        body: GridView.count(
+        body: GridView.extent(
           scrollDirection: Axis.vertical, // 滚动方向
-          crossAxisCount: 5, // 每行5个
+          maxCrossAxisExtent: 100, // 每个子项的最大宽度
+
           padding: EdgeInsets.all(10),
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
