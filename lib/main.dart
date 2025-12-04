@@ -60,23 +60,24 @@ class _MainPageState extends State<MainPage> {
             SliverToBoxAdapter(child: SizedBox(height: 10)),
             SliverPersistentHeader(pinned: true, delegate: _stickyCategory()),
             SliverToBoxAdapter(child: SizedBox(height: 10)),
-            SliverList.separated(
-              itemBuilder: (context, index) {
+            SliverGrid.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              children: List.generate(100, (index) {
                 return Container(
-                  height: 50,
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent,
-                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.purpleAccent,
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
                     "商品${index + 1}",
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 );
-              },
-              separatorBuilder: (context, index) => SizedBox(height: 10),
-              itemCount: 30,
+              }),
             ),
           ],
         ),
