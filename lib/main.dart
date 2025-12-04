@@ -1,89 +1,107 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-void main() {
+void main(List<String> args) {
   runApp(MainPage());
 }
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  MainPage({Key? key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  List<String> msgList = ["鱼香肉丝", "宫保鸡丁", "红烧肉", "青椒肉丝", "溜肉片", "北京烤鸭"];
+  @override
+  void initState() {
+    super.initState();
+    _getChannels();
+  }
+
+  List<Map<String, dynamic>> _list = [];
+
+  void _getChannels() async {
+    Response<dynamic> response = await DioUtils().get("/channels");
+    Map<String, dynamic> res = response.data as Map<String, dynamic>;
+    List<dynamic> channels = res["data"]["channels"] as List<dynamic>;
+    _list = channels.cast<Map<String, dynamic>>();
+    print(_list);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('父子组件通信')),
-        body: GridView.count(
-          crossAxisCount: 3,
-          childAspectRatio: 2.0,
-          children: List.generate(
-            msgList.length,
-            (index) => Child(
-              msg: msgList[index],
-              index: index,
-              deleteFood: (int i) {
-                msgList.removeAt(i);
-                setState(() {});
-              },
-            ),
-          ),
+        appBar: AppBar(title: Text("频道管理")),
+        body: GridView.extent(
+          padding: EdgeInsets.all(10),
+          maxCrossAxisExtent: 140,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 2,
+          children: _list
+              .map(
+                (e) => Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.blue[200],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    e["name"] as String,
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                ),
+              )
+              .toList(),
         ),
       ),
     );
   }
 }
 
-class Child extends StatefulWidget {
-  final String msg;
-  final int index;
-  final Function(int) deleteFood;
-  const Child({
-    Key? key,
-    required this.msg,
-    required this.index,
-    required this.deleteFood,
-  }) : super(key: key);
+class DioUtils {
+  final Dio _dio = Dio();
 
-  @override
-  _ChildState createState() => _ChildState();
-}
+  DioUtils() {
+    _dio.options.baseUrl = "http://geek.itheima.net/v1_0";
+    _dio.options.connectTimeout = Duration(seconds: 10);
+    _dio.options.receiveTimeout = Duration(seconds: 10);
+    _dio.options.sendTimeout = Duration(seconds: 10);
+    _addInterceptor();
+  }
 
-class _ChildState extends State<Child> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.blue[50],
-        border: Border.all(color: Colors.blue),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Stack(
-        alignment: Alignment.topRight,
-        children: [
-          Container(
-            alignment: Alignment.center,
-            color: Colors.blue[50],
-            child: Text(
-              widget.msg,
-              style: TextStyle(fontSize: 20, color: Colors.blue[800]),
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.delete),
-            color: Colors.blue[800],
-            onPressed: () {
-              widget.deleteFood(widget.index);
-            },
-          ),
-        ],
+  Future<Response<dynamic>> get(
+    String url, {
+    Map<String, dynamic>? queryParameters,
+  }) {
+    return _dio.get(url, queryParameters: queryParameters);
+  }
+
+  void _addInterceptor() {
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (context, handler) {
+          // 在发送请求之前做些什么
+          return handler.next(context); // 继续发送请求
+        },
+        onResponse: (context, handler) {
+          // 在收到响应数据之前做些什么
+          if (context.statusCode! >= 200 && context.statusCode! < 300) {
+            handler.next(context);
+            return; // 继续处理响应
+          }
+          handler.reject(
+            DioException(requestOptions: context.requestOptions),
+          ); // 继续处理响应.
+        },
+        onError: (context, handler) {
+          // 当请求失败时做些什么
+          return handler.reject(context); // 继续处理错误
+        },
       ),
     );
   }
