@@ -40,31 +40,81 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('ListView组件'))),
-        body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 100,
-            mainAxisSpacing: 10, // 主轴方向间距
-            crossAxisSpacing: 10,
-            childAspectRatio: 0.8, // 交叉轴方向间距
-          ),
-          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //   crossAxisCount: 4, // 每行3个子项
-          //   mainAxisSpacing: 10, // 主轴方向间距
-          //   crossAxisSpacing: 10, // 交叉轴方向间距
-          // ),
-          scrollDirection: Axis.vertical, // 滚动方向
-          padding: EdgeInsets.all(10),
-          itemCount: 100,
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
+                alignment: Alignment.center,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.lightBlueAccent,
+                ),
+                child: Text(
+                  "轮播图",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              ),
+            ),
+
+            SliverToBoxAdapter(child: SizedBox(height: 10)),
+            SliverPersistentHeader(pinned: true, delegate: _stickyCategory()),
+            SliverToBoxAdapter(child: SizedBox(height: 10)),
+            SliverList.separated(
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlueAccent,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "商品${index + 1}",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 10),
+              itemCount: 30,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _stickyCategory extends SliverPersistentHeaderDelegate {
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Container(
+      alignment: Alignment.center,
+      // 移除固定高度，让内容自适应
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Colors.lightBlueAccent,
+      ),
+      child: Center(
+        child: ListView.builder(
+          itemCount: 30,
+          scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return Container(
-              height: 80,
+              width: 100,
+              height: 40, // 设置固定高度
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.orangeAccent,
                 borderRadius: BorderRadius.circular(10),
               ),
+              margin: EdgeInsets.symmetric(horizontal: 5),
               child: Text(
-                "第${index + 1}项",
+                "分类${index + 1}",
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             );
@@ -72,5 +122,16 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     );
+  }
+
+  @override
+  double get maxExtent => 80; // 修改为与minExtent相同
+
+  @override
+  double get minExtent => 40;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }
