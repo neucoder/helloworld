@@ -40,14 +40,22 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: Text('ListView组件'))),
-        body: GridView.extent(
+        body: GridView.builder(
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 100,
+            mainAxisSpacing: 10, // 主轴方向间距
+            crossAxisSpacing: 10,
+            childAspectRatio: 0.8, // 交叉轴方向间距
+          ),
+          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          //   crossAxisCount: 4, // 每行3个子项
+          //   mainAxisSpacing: 10, // 主轴方向间距
+          //   crossAxisSpacing: 10, // 交叉轴方向间距
+          // ),
           scrollDirection: Axis.vertical, // 滚动方向
-          maxCrossAxisExtent: 100, // 每个子项的最大宽度
-
           padding: EdgeInsets.all(10),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          children: List.generate(100, (index) {
+          itemCount: 100,
+          itemBuilder: (context, index) {
             return Container(
               height: 80,
               alignment: Alignment.center,
@@ -60,7 +68,7 @@ class _MainPageState extends State<MainPage> {
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
             );
-          }),
+          },
         ),
       ),
     );
