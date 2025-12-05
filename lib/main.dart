@@ -4,90 +4,118 @@ void main(List<String> args) {
   runApp(MainPage());
 }
 
-class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  MainPage({Key? key}) : super(key: key);
 
   @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: ListPage());
+    return MaterialApp(
+      initialRoute: '/goodList',
+      onGenerateRoute: (settings) {
+        if (settings.name == '/cartList') {
+          bool isLogin = true;
+          if (isLogin) {
+            return MaterialPageRoute(builder: (context) => CartList());
+          } else {
+            return MaterialPageRoute(builder: (context) => LoginPage());
+          }
+        }
+        print(settings.name);
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (context) => UnknownPage());
+      },
+
+      routes: {'/goodList': (context) => GoodLists()},
+    );
   }
 }
 
-class ListPage extends StatefulWidget {
-  const ListPage({Key? key}) : super(key: key);
+class GoodLists extends StatefulWidget {
+  GoodLists({Key? key}) : super(key: key);
 
   @override
-  _ListPageState createState() => _ListPageState();
+  _GoodListsState createState() => _GoodListsState();
 }
 
-class _ListPageState extends State<ListPage> {
+class _GoodListsState extends State<GoodLists> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('列表')),
-      body: ListView.builder(
-        itemCount: 100,
-        itemBuilder: (context, index) {
-          return MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () {
-                print('点击了列表项$index');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return DetailPage(id: index);
-                    },
-                  ),
-                );
-              },
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.blue[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  '列表项$index',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
+      appBar: AppBar(title: Text('商品列表')),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/cartList');
+          },
+          child: Text('加入购物车'),
+        ),
       ),
     );
   }
 }
 
-class DetailPage extends StatefulWidget {
-  final int id;
-  const DetailPage({Key? key, required this.id}) : super(key: key);
+class CartList extends StatefulWidget {
+  CartList({Key? key}) : super(key: key);
 
   @override
-  _DetailPageState createState() => _DetailPageState();
+  _CartListState createState() => _CartListState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _CartListState extends State<CartList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('详情')),
+      appBar: AppBar(title: Text('购物车')),
       body: Center(
         child: TextButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushNamed(context, '/abbc');
           },
-          child: Text('返回列表--:${widget.id}'),
+          child: Text('去结算'),
         ),
       ),
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('登录')),
+      body: Center(
+        child: TextButton(onPressed: () {}, child: Text('登录')),
+      ),
+    );
+  }
+}
+
+class UnknownPage extends StatefulWidget {
+  UnknownPage({Key? key}) : super(key: key);
+
+  @override
+  _UnknownPageState createState() => _UnknownPageState();
+}
+
+class _UnknownPageState extends State<UnknownPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('未知页面')),
+      body: Center(child: Text('未知页面 404')),
     );
   }
 }
