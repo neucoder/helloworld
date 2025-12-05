@@ -41,7 +41,11 @@ class _ListPageState extends State<ListPage> {
               onTap: () {
                 print('点击了列表项$index');
                 // 跳转到详情页
-                Navigator.pushNamed(context, '/detail');
+                Navigator.pushNamed(
+                  context,
+                  '/detail',
+                  arguments: {"id": index},
+                );
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
@@ -84,6 +88,20 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  int _id = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      final Map<String, dynamic> args =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      _id = args['id'] as int;
+      print('详情页id:${args['id']}');
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +112,7 @@ class _DetailPageState extends State<DetailPage> {
             // Navigator.pushNamed(context, '/list');
             Navigator.pop(context);
           },
-          child: Text('返回列表'),
+          child: Text('返回列表--:${_id}'),
         ),
       ),
     );
