@@ -9,14 +9,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/list',
-      routes: {
-        '/list': (context) => ListPage(),
-        '/detail': (context) => DetailPage(),
-      },
-      home: ListPage(),
-    );
+    return MaterialApp(home: ListPage());
   }
 }
 
@@ -40,20 +33,14 @@ class _ListPageState extends State<ListPage> {
             child: GestureDetector(
               onTap: () {
                 print('点击了列表项$index');
-                // 跳转到详情页
-                Navigator.pushNamed(
+                Navigator.push(
                   context,
-                  '/detail',
-                  arguments: {"id": index},
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DetailPage(id: index);
+                    },
+                  ),
                 );
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return DetailPage();
-                //     },
-                //   ),
-                // );
               },
               child: Container(
                 height: 50,
@@ -81,27 +68,14 @@ class _ListPageState extends State<ListPage> {
 }
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final int id;
+  const DetailPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  int _id = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() {
-      final Map<String, dynamic> args =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      _id = args['id'] as int;
-      print('详情页id:${args['id']}');
-      setState(() {});
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,10 +83,9 @@ class _DetailPageState extends State<DetailPage> {
       body: Center(
         child: TextButton(
           onPressed: () {
-            // Navigator.pushNamed(context, '/list');
             Navigator.pop(context);
           },
-          child: Text('返回列表--:${_id}'),
+          child: Text('返回列表--:${widget.id}'),
         ),
       ),
     );
