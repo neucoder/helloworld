@@ -9,7 +9,14 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: ListPage());
+    return MaterialApp(
+      initialRoute: '/list',
+      routes: {
+        '/list': (context) => ListPage(),
+        '/detail': (context) => DetailPage(),
+      },
+      home: ListPage(),
+    );
   }
 }
 
@@ -33,14 +40,16 @@ class _ListPageState extends State<ListPage> {
             child: GestureDetector(
               onTap: () {
                 print('点击了列表项$index');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return DetailPage();
-                    },
-                  ),
-                );
+                // 跳转到详情页
+                Navigator.pushNamed(context, '/detail');
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) {
+                //       return DetailPage();
+                //     },
+                //   ),
+                // );
               },
               child: Container(
                 height: 50,
@@ -82,6 +91,7 @@ class _DetailPageState extends State<DetailPage> {
       body: Center(
         child: TextButton(
           onPressed: () {
+            // Navigator.pushNamed(context, '/list');
             Navigator.pop(context);
           },
           child: Text('返回列表'),
